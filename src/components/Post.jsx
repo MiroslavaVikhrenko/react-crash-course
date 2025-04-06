@@ -1,12 +1,9 @@
-const names = ['Yumi', 'Kenji'];
-
-function Post() {
-    // Standard JS code to pick a random name for dynamic values 
-    const chosenName = Math.random() > 0.5 ? names[0] : names[1];
-
+function Post(props) {
+    // access attributes from props object
+    // props.author or props.body
     return <div>
-        <p>{chosenName}</p>
-        <p>React.js is awesome!</p>
+        <p>{props.author}</p>
+        <p>{props.body}</p>
     </div>
 }
 
