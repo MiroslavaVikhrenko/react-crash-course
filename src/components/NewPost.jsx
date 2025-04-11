@@ -1,9 +1,9 @@
-import {useState} from 'react';
+//import {useState} from 'react';
 import classes from './NewPost.module.css';
 
 // "htmlFor" instead of "for" in jsx
 
-function NewPost() {
+function NewPost(props) {
   //const stateData = useState(''); // stateData is an array with always 2 elements 
 
   //stateData[0] // current state value (currently empty string but can be changed)
@@ -20,25 +20,24 @@ function NewPost() {
   // you DON'T unnecessarily update the DOM, which is quite performance intensive
 
   // Use array destructuring and register a state
-  const [enteredBody, setEnteredBody] = useState();
+  // const [enteredBody, setEnteredBody] = useState();
 
-  function changeBodyHandler(event) {
-    setEnteredBody(event.target.value); // pass a new value
+  // function changeBodyHandler(event) {
+  //   setEnteredBody(event.target.value); // pass a new value
 
-    // it may be a const because it's always a brand new const 
-    // because it's always a brand new function execution in the end when you update the state
-  }
+  //   // it may be a const because it's always a brand new const 
+  //   // because it's always a brand new function execution in the end when you update the state
+  // }
 
   return (
     <form className={classes.form}>
       <p>
         <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={changeBodyHandler}/>
+        <textarea id="body" required rows={3} onChange={props.onBodyChange}/>
       </p>
-      <p>{enteredBody}</p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required />
+        <input type="text" id="name" required onChange={props.onAuthorChange} />
       </p>
     </form>
   );
