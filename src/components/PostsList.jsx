@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Post from './Post';
 import NewPost from './NewPost';
+import Modal from './Modal';
 import classes from './PostsList.module.css';
 
 // If you have state that's manipulated in component A, but needed in component B, 
@@ -23,7 +24,12 @@ function PostsList() {
 
     return (
     <>
-        <NewPost onBodyChange={bodyChangeHandler} onAuthorChange={authorChangeHandler} />
+        <Modal>
+            <NewPost 
+                onBodyChange={bodyChangeHandler} 
+                onAuthorChange={authorChangeHandler} 
+            />
+        </Modal>
         <ul className={classes.posts}>
             <Post author={enteredAuthor} body={enteredBody}/>
             <Post author="Kenji" body="Let's go for a long run!"/>
