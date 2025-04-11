@@ -1,5 +1,7 @@
 import classes from './NewPost.module.css';
 
+// "htmlFor" instead of "for" in jsx
+
 function NewPost() {
   return (
     <form className={classes.form}>
