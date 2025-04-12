@@ -15,6 +15,16 @@ function PostsList({isPosting, onStopPosting}) {
     const [posts, setPosts] = useState([]); // pass empty posts array as initial value
 
     function addPostHandler(postData) {
+        // Use dummy backend
+        fetch('http://localhost:8080/posts', {
+            method: 'POST',
+            body: JSON.stringify(postData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }); // can be used to send HTTP requests (both fetch and send) 
+        // http://localhost:8080 => because the backend runs locally on our machine and 8080 is used port
+
         //setPosts([postData, ...posts]); // ...posts => to spread our existing posts into this new array of posts - will work, but
         // Here is a better way of updating your state IF it depends on the previous state snapshot
         setPosts((existingPosts) => [postData, ...existingPosts]); 
