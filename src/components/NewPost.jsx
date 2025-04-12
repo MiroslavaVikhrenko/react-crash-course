@@ -1,9 +1,39 @@
-//import {useState} from 'react';
+import {useState} from 'react';
 import classes from './NewPost.module.css';
 
 // "htmlFor" instead of "for" in jsx
 
-function NewPost({onBodyChange, onAuthorChange, onCancel}) {
+function NewPost({onCancel}) {
+  // Register states   
+  const [enteredBody, setEnteredBody] = useState('');
+  const [enteredAuthor, setEnteredAuthor] = useState('');
+
+  function bodyChangeHandler(event) {
+      setEnteredBody(event.target.value);
+  }
+
+  function authorChangeHandler(event) {
+      setEnteredAuthor(event.target.value);
+  }
+
+  // This is default submit event.
+  // When a form is submitted, this submit event will be triggered and
+  // the browser will automatically generate and send an HTTP request
+  // We don't want it here => because sending an HTTP request to the server that's serving this React app would in the end
+  // lead to the page being reloaded and we have NO server side code here that would handle that request.
+  // React is a front end library running in the browser, NOT on the server. It CAN'T handle that request. => 
+  // we will use preventDefault() method => this prevents the browser default of generating and sending an HTTP request
+  function submitHandler(event) {
+    event.preventDefault();
+    const postData = {
+      body: enteredBody,
+      author: enteredAuthor
+    };
+    console.log(postData);
+    // Close the form
+    onCancel();
+  }
+
   //const stateData = useState(''); // stateData is an array with always 2 elements 
 
   //stateData[0] // current state value (currently empty string but can be changed)
@@ -32,14 +62,14 @@ function NewPost({onBodyChange, onAuthorChange, onCancel}) {
   // button type='submit' => default => not required
 
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler} >
       <p>
         <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={onBodyChange}/>
+        <textarea id="body" required rows={3} onChange={bodyChangeHandler}/>
       </p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required onChange={onAuthorChange} />
+        <input type="text" id="name" required onChange={authorChangeHandler} />
       </p>
       <p className={classes.actions}>
         <button type='button' onClick={onCancel}>Cancel</button>

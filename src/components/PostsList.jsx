@@ -11,42 +11,6 @@ import classes from './PostsList.module.css';
 // the place where the state should be manipulated
 
 function PostsList({isPosting, onStopPosting}) {
-    // Register states   
-    const [enteredBody, setEnteredBody] = useState('');
-    const [enteredAuthor, setEnteredAuthor] = useState('');
-
-    function bodyChangeHandler(event) {
-        setEnteredBody(event.target.value);
-    }
-
-    function authorChangeHandler(event) {
-        setEnteredAuthor(event.target.value);
-    }
-
-    // in conditional rendering for <Modal> you can use either null or false
-
-    // Approach #1 - variable + condition
-    // let modalContent;
-
-    // if (modalIsVisible) {
-    //     modalContent = <Modal onClose={hideModalHandler} >
-    //     <NewPost 
-    //         onBodyChange={bodyChangeHandler} 
-    //         onAuthorChange={authorChangeHandler} 
-    //     />
-    // </Modal>
-    // }
-
-    // Approach #2 - ternary
-    // {modalIsVisible ? (<Modal onClose={hideModalHandler} >
-    //     <NewPost 
-    //         onBodyChange={bodyChangeHandler} 
-    //         onAuthorChange={authorChangeHandler} 
-    //     />
-    // </Modal>
-    // ) : false}
-
-    // Approach #3 - &&
 
     return (
     <>
@@ -54,15 +18,12 @@ function PostsList({isPosting, onStopPosting}) {
         {isPosting && (
             <Modal onClose={onStopPosting} >
                 <NewPost 
-                    onBodyChange={bodyChangeHandler} 
-                    onAuthorChange={authorChangeHandler} 
                     onCancel={onStopPosting}
                 />
             </Modal>
         )}
         
         <ul className={classes.posts}>
-            <Post author={enteredAuthor} body={enteredBody}/>
             <Post author="Kenji" body="Let's go for a long run!"/>
         </ul>
     </>
