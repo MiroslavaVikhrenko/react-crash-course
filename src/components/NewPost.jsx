@@ -3,7 +3,7 @@ import classes from './NewPost.module.css';
 
 // "htmlFor" instead of "for" in jsx
 
-function NewPost(props) {
+function NewPost({onBodyChange, onAuthorChange, onCancel}) {
   //const stateData = useState(''); // stateData is an array with always 2 elements 
 
   //stateData[0] // current state value (currently empty string but can be changed)
@@ -29,15 +29,21 @@ function NewPost(props) {
   //   // because it's always a brand new function execution in the end when you update the state
   // }
 
+  // button type='submit' => default => not required
+
   return (
     <form className={classes.form}>
       <p>
         <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={props.onBodyChange}/>
+        <textarea id="body" required rows={3} onChange={onBodyChange}/>
       </p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required onChange={props.onAuthorChange} />
+        <input type="text" id="name" required onChange={onAuthorChange} />
+      </p>
+      <p className={classes.actions}>
+        <button type='button' onClick={onCancel}>Cancel</button>
+        <button>Submit</button>
       </p>
     </form>
   );
