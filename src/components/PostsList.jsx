@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Post from './Post';
 import NewPost from './NewPost';
 import Modal from './Modal';
@@ -11,8 +11,24 @@ import classes from './PostsList.module.css';
 // the place where the state should be manipulated
 
 function PostsList({isPosting, onStopPosting}) {
+    // If we use the line below it would cause infinite loop as component function would be called again and again
+    // fetch('http://localhost:8080/posts').then(response => response.json()).then(data => {setPosts(data.posts);});
+    // To solve it we must use useEffect() hook to avoid infinite loop
+
     // Register states
     const [posts, setPosts] = useState([]); // pass empty posts array as initial value
+
+    useEffect(() =>{
+        async function fetchPosts() {
+           const response = await fetch('http://localhost:8080/posts')
+           const resData = await response.json();
+           setPosts(resData.posts);
+        } 
+
+        fetchPosts();       
+    }, []);
+
+    // empty dependencies [] make sure that this function is executed only once when this component is first rendered
 
     function addPostHandler(postData) {
         // Use dummy backend
