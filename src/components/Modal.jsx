@@ -6,9 +6,11 @@ import classes from './Modal.module.css';
 
 // "true" is default value for "open" prop - required for dialog to be visible
 
-function Modal({children}) {
+// onClick => default event listener
+
+function Modal({children, onClose}) {
     return <>
-    <div className={classes.backdrop} />
+    <div className={classes.backdrop} onClick={onClose} />
     <dialog open className={classes.modal} >
         {children}
     </dialog>
