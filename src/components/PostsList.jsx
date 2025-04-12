@@ -11,6 +11,20 @@ import classes from './PostsList.module.css';
 // the place where the state should be manipulated
 
 function PostsList({isPosting, onStopPosting}) {
+    // Register states
+    const [posts, setPosts] = useState([]); // pass empty posts array as initial value
+
+    function addPostHandler(postData) {
+        //setPosts([postData, ...posts]); // ...posts => to spread our existing posts into this new array of posts - will work, but
+        // Here is a better way of updating your state IF it depends on the previous state snapshot
+        setPosts((existingPosts) => [postData, ...existingPosts]); 
+
+        // The reason for above => internally React does actually NOT execute your state updating functions instantly 
+        // At least it's not guaranteed that it will do so. But it schedules those stateupdates and 
+        // In case you have multiple state updates after each other, you could potentially update your state based on some old state.
+        // This is the way to make sure that React ensures that you get the latest correct state for this state update
+        // Even if you have multiple pending state updates
+    }
 
     return (
     <>
@@ -19,6 +33,7 @@ function PostsList({isPosting, onStopPosting}) {
             <Modal onClose={onStopPosting} >
                 <NewPost 
                     onCancel={onStopPosting}
+                    onAddPost={addPostHandler}
                 />
             </Modal>
         )}
