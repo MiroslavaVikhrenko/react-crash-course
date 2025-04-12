@@ -10,15 +10,10 @@ import classes from './PostsList.module.css';
 // and it's also the PostsList component that has access to the NewPost component which is
 // the place where the state should be manipulated
 
-function PostsList() {
-    // Register states
-    const [modalIsVisible, setModalIsVisible] = useState(true);
+function PostsList({isPosting, onStopPosting}) {
+    // Register states   
     const [enteredBody, setEnteredBody] = useState('');
     const [enteredAuthor, setEnteredAuthor] = useState('');
-
-    function hideModalHandler() {
-        setModalIsVisible(false);
-    }
 
     function bodyChangeHandler(event) {
         setEnteredBody(event.target.value);
@@ -56,12 +51,13 @@ function PostsList() {
     return (
     <>
     {/* {modalContent} */}
-        {modalIsVisible && (<Modal onClose={hideModalHandler} >
-            <NewPost 
-                onBodyChange={bodyChangeHandler} 
-                onAuthorChange={authorChangeHandler} 
-            />
-        </Modal>
+        {isPosting && (
+            <Modal onClose={onStopPosting} >
+                <NewPost 
+                    onBodyChange={bodyChangeHandler} 
+                    onAuthorChange={authorChangeHandler} 
+                />
+            </Modal>
         )}
         
         <ul className={classes.posts}>
