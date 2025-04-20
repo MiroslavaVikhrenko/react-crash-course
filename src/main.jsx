@@ -5,6 +5,7 @@ import Posts, {loader as postsLoader} from './routes/Posts'
 import './index.css'
 import RootLayout from './routes/RootLayout';
 import NewPost, {action as newPostAction} from './routes/NewPost';
+import PostDetails, {loader as postDetailsLoader} from './routes/PostDetails';
 
 // Create a route configuration object for 'router' prop
 // createBrowserRouter() function takes an array which is a list of route definitions.
@@ -22,6 +23,8 @@ const router = createBrowserRouter([
         loader: postsLoader,
         children:[
           {path: '/create-post', element: <NewPost />, action: newPostAction}, // <our-domain>/create-post
+          // dynamic route
+          {path: '/:id', element: <PostDetails />, action: postDetailsLoader},
       ]},
       
     ]
