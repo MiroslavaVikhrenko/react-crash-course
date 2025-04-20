@@ -1,6 +1,6 @@
-import {useState, useEffect} from 'react';
 import Post from './Post';
 import classes from './PostsList.module.css';
+import {useLoaderData} from 'react-router-dom'; // hook
 
 // If you have state that's manipulated in component A, but needed in component B, 
 // you should LIFT the state UP to a component that has access to both components that need the state.
@@ -9,27 +9,29 @@ import classes from './PostsList.module.css';
 // the place where the state should be manipulated
 
 function PostsList() {
+    // Use useLoaderData hook from react-router-dom
+    const posts = useLoaderData();
     // If we use the line below it would cause infinite loop as component function would be called again and again
     // fetch('http://localhost:8080/posts').then(response => response.json()).then(data => {setPosts(data.posts);});
     // To solve it we must use useEffect() hook to avoid infinite loop
 
     // Register states
-    const [posts, setPosts] = useState([]); // pass empty posts array as initial value
+    // const [posts, setPosts] = useState([]); // pass empty posts array as initial value
 
     // loading => in case backend data has delay we want to show that the data is loading
-    const [isFetching, setIsFetching] = useState(false);
+    // const [isFetching, setIsFetching] = useState(false);
 
-    useEffect(() =>{
-        async function fetchPosts() {
-            setIsFetching(true);
-            const response = await fetch('http://localhost:8080/posts');
-            const resData = await response.json();
-            setPosts(resData.posts);
-            setIsFetching(false);
-        } 
+    // useEffect(() =>{
+    //     async function fetchPosts() {
+    //         setIsFetching(true);
+    //         // const response = await fetch('http://localhost:8080/posts');
+    //         // const resData = await response.json();
+    //         setPosts(resData.posts);
+    //         setIsFetching(false);
+    //     } 
 
-        fetchPosts();       
-    }, []);
+    //     fetchPosts();       
+    // }, []);
 
     // empty dependencies [] make sure that this function is executed only once when this component is first rendered
 
@@ -57,24 +59,24 @@ function PostsList() {
 
     return (
     <>
-        {!isFetching && posts.length > 0 && (
+        {posts.length > 0 && (
             <ul className={classes.posts}>
                 {posts.map((post) => (
                     <Post key={post.body} author={post.author} body={post.body}/> 
                 ))}
             </ul>
         )}
-        {!isFetching && posts.length === 0 && (
+        {posts.length === 0 && (
             <div style={{textAlign: 'center', color: 'white'}}>
                 <h2>There are no posts yet.</h2>
                 <p>Start adding some!</p>
             </div>
         )}     
-        {isFetching && 
+        {/* {isFetching && 
         <div style={{textAlign: 'center', color: 'white'}}>
             <p>Loading posts...</p>
         </div>       
-        }  
+        }   */}
     </>
     );
 }
