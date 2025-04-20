@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
-import App from './App'
+import Posts from './routes/Posts'
 import './index.css'
 import RootLayout from './routes/RootLayout';
-import NewPost from './components/NewPost';
+import NewPost from './routes/NewPost';
 
 // Create a route configuration object for 'router' prop
 // createBrowserRouter() function takes an array which is a list of route definitions.
@@ -15,8 +15,14 @@ const router = createBrowserRouter([
     path: '/', 
     element: <RootLayout />, 
     children:[ // nested routes:
-      {path: '/', element: <App />}, // <our-domain>
-      {path: '/create-post', element: <NewPost />}, // <our-domain>/create-post
+       // <our-domain>
+      {
+        path: '/', 
+        element: <Posts />, 
+        children:[
+          {path: '/create-post', element: <NewPost />}, // <our-domain>/create-post
+      ]},
+      
     ]
   },  
 ]);

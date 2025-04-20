@@ -1,7 +1,5 @@
 import {useState, useEffect} from 'react';
 import Post from './Post';
-import NewPost from './NewPost';
-import Modal from './Modal';
 import classes from './PostsList.module.css';
 
 // If you have state that's manipulated in component A, but needed in component B, 
@@ -10,7 +8,7 @@ import classes from './PostsList.module.css';
 // and it's also the PostsList component that has access to the NewPost component which is
 // the place where the state should be manipulated
 
-function PostsList({isPosting, onStopPosting}) {
+function PostsList() {
     // If we use the line below it would cause infinite loop as component function would be called again and again
     // fetch('http://localhost:8080/posts').then(response => response.json()).then(data => {setPosts(data.posts);});
     // To solve it we must use useEffect() hook to avoid infinite loop
@@ -59,15 +57,6 @@ function PostsList({isPosting, onStopPosting}) {
 
     return (
     <>
-    {/* {modalContent} */}
-        {isPosting && (
-            <Modal onClose={onStopPosting} >
-                <NewPost 
-                    onCancel={onStopPosting}
-                    onAddPost={addPostHandler}
-                />
-            </Modal>
-        )}
         {!isFetching && posts.length > 0 && (
             <ul className={classes.posts}>
                 {posts.map((post) => (

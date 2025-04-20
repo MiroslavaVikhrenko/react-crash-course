@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import classes from './NewPost.module.css';
+import Modal from '../components/Modal';
 
 // "htmlFor" instead of "for" in jsx
 
@@ -62,6 +63,7 @@ function NewPost({onCancel, onAddPost}) {
   // button type='submit' => default => not required
 
   return (
+    <Modal>
     <form className={classes.form} onSubmit={submitHandler} >
       <p>
         <label htmlFor="body">Text</label>
@@ -76,6 +78,7 @@ function NewPost({onCancel, onAddPost}) {
         <button>Submit</button>
       </p>
     </form>
+    </Modal>
   );
 }
 
