@@ -1,22 +1,21 @@
-import {useState} from 'react';
 import classes from './NewPost.module.css';
 import Modal from '../components/Modal';
-import { Link } from 'react-router-dom';
+import { Link, Form, redirect } from 'react-router-dom';
 
 // "htmlFor" instead of "for" in jsx
 
-function NewPost({onAddPost}) {
+function NewPost() {
   // Register states   
-  const [enteredBody, setEnteredBody] = useState('');
-  const [enteredAuthor, setEnteredAuthor] = useState('');
+  // const [enteredBody, setEnteredBody] = useState('');
+  // const [enteredAuthor, setEnteredAuthor] = useState('');
 
-  function bodyChangeHandler(event) {
-      setEnteredBody(event.target.value);
-  }
+  // function bodyChangeHandler(event) {
+  //     setEnteredBody(event.target.value);
+  // }
 
-  function authorChangeHandler(event) {
-      setEnteredAuthor(event.target.value);
-  }
+  // function authorChangeHandler(event) {
+  //     setEnteredAuthor(event.target.value);
+  // }
 
   // This is default submit event.
   // When a form is submitted, this submit event will be triggered and
@@ -25,16 +24,16 @@ function NewPost({onAddPost}) {
   // lead to the page being reloaded and we have NO server side code here that would handle that request.
   // React is a front end library running in the browser, NOT on the server. It CAN'T handle that request. => 
   // we will use preventDefault() method => this prevents the browser default of generating and sending an HTTP request
-  function submitHandler(event) {
-    event.preventDefault();
-    const postData = {
-      body: enteredBody,
-      author: enteredAuthor
-    };
-    onAddPost(postData);
-    // Close the form
-    onCancel();
-  }
+  // function submitHandler(event) {
+  //   event.preventDefault();
+  //   const postData = {
+  //     body: enteredBody,
+  //     author: enteredAuthor
+  //   };
+  //   //onAddPost(postData);   
+  //   // Close the form
+  //   //onCancel();
+  // }
 
   //const stateData = useState(''); // stateData is an array with always 2 elements 
 
@@ -65,22 +64,39 @@ function NewPost({onAddPost}) {
 
   return (
     <Modal>
-    <form className={classes.form} onSubmit={submitHandler} >
+    <Form method='post' className={classes.form} >
       <p>
         <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={bodyChangeHandler}/>
+        <textarea id="body" name="body" required rows={3}/>
       </p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required onChange={authorChangeHandler} />
+        <input type="text" id="name" name="author" required />
       </p>
       <p className={classes.actions}>
         <Link to=".." type='button'>Cancel</Link>
         <button>Submit</button>
       </p>
-    </form>
+    </Form>
     </Modal>
   );
 }
 
 export default NewPost;
+
+// on the client side in the browser
+export async function action({request}) {
+  // Get form data
+  const formData = await request.formData();
+  // Extract form data
+  const postData = Object.fromEntries(formData); // create a basic key-value pair {body: '...', author: '...'}
+  await fetch('http://localhost:8080/posts', {
+    method: 'POST',
+    body: JSON.stringify(postData),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+  });
+
+  return redirect('/');
+};

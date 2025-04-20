@@ -35,27 +35,27 @@ function PostsList() {
 
     // empty dependencies [] make sure that this function is executed only once when this component is first rendered
 
-    function addPostHandler(postData) {
-        // Use dummy backend
-        fetch('http://localhost:8080/posts', {
-            method: 'POST',
-            body: JSON.stringify(postData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }); // can be used to send HTTP requests (both fetch and send) 
-        // http://localhost:8080 => because the backend runs locally on our machine and 8080 is used port
+    // function addPostHandler(postData) {
+    //     // Use dummy backend
+    //     // fetch('http://localhost:8080/posts', {
+    //     //     method: 'POST',
+    //     //     body: JSON.stringify(postData),
+    //     //     headers: {
+    //     //         'Content-Type': 'application/json'
+    //     //     }
+    //     // }); // can be used to send HTTP requests (both fetch and send) 
+    //     // http://localhost:8080 => because the backend runs locally on our machine and 8080 is used port
 
-        //setPosts([postData, ...posts]); // ...posts => to spread our existing posts into this new array of posts - will work, but
-        // Here is a better way of updating your state IF it depends on the previous state snapshot
-        setPosts((existingPosts) => [postData, ...existingPosts]); 
+    //     //setPosts([postData, ...posts]); // ...posts => to spread our existing posts into this new array of posts - will work, but
+    //     // Here is a better way of updating your state IF it depends on the previous state snapshot
+    //     setPosts((existingPosts) => [postData, ...existingPosts]); 
 
-        // The reason for above => internally React does actually NOT execute your state updating functions instantly 
-        // At least it's not guaranteed that it will do so. But it schedules those stateupdates and 
-        // In case you have multiple state updates after each other, you could potentially update your state based on some old state.
-        // This is the way to make sure that React ensures that you get the latest correct state for this state update
-        // Even if you have multiple pending state updates
-    }
+    //     // The reason for above => internally React does actually NOT execute your state updating functions instantly 
+    //     // At least it's not guaranteed that it will do so. But it schedules those stateupdates and 
+    //     // In case you have multiple state updates after each other, you could potentially update your state based on some old state.
+    //     // This is the way to make sure that React ensures that you get the latest correct state for this state update
+    //     // Even if you have multiple pending state updates
+    // }
 
     return (
     <>
