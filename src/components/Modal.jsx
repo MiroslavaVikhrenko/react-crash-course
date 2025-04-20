@@ -1,3 +1,4 @@
+import {useNavigate} from 'react-router-dom'; // hook
 import classes from './Modal.module.css';
 
 // De-structure props to children (NewPost)
@@ -8,9 +9,16 @@ import classes from './Modal.module.css';
 
 // onClick => default event listener
 
-function Modal({children, onClose}) {
+function Modal({children}) {
+    // Use react-router-dom hook useNavigate()
+    const navigate = useNavigate(); // function
+
+    function closeHandler() {
+        navigate('..'); // or navigate('/');
+    }
+
     return <>
-    <div className={classes.backdrop} onClick={onClose} />
+    <div className={classes.backdrop} onClick={closeHandler} />
     <dialog open className={classes.modal} >
         {children}
     </dialog>
