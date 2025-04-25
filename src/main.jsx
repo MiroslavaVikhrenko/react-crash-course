@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         children:[
           {path: '/create-post', element: <NewPost />, action: newPostAction}, // <our-domain>/create-post
           // dynamic route
-          {path: '/:id', element: <PostDetails />, action: postDetailsLoader},
+          {path: '/:id', element: <PostDetails />, loader: postDetailsLoader},
       ]},
       
     ]
